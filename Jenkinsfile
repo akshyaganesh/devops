@@ -31,11 +31,11 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script [
-                    withSonarQubeEnv('SonarQubeServer') { 
+                    withSonarQubeEnv('sonar-connection') { 
                         sh '''
                             mvn clean verify sonar:sonar \
                                 -Dsonar.host.url=http://192.168.1.15:9000 \
-                                -Dsonar.login=s$sonar-connection
+                                -Dsonar.login=$sonar-connection
                             '''
                     } 
 
