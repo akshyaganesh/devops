@@ -31,7 +31,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script [
-                    withSonarQubeEnv('SonarQubeServer') { # Replace 'SonarQubeServer' with your Jenkins SonarQube configuration name
+                    withSonarQubeEnv('SonarQubeServer') { 
                         sh '''
                             mvn clean verify sonar:sonar \
                                 -Dsonar.host.url=http://192.168.1.15:9000 \
