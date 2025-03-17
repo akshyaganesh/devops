@@ -11,7 +11,7 @@ pipeline {
 
         stage('Github Checkout'){
             steps{
-                git 'https://github.com/akshyaganesh/devops.git'
+                git branch: 'main', url: 'https://github.com/akshyaganesh/devops.git'
                 //checkout scmGit(branches [[name '*/main']], extensions [], userRemoteConfigs [[url 'https://github.com/akshyaganesh/devops.git']])
                 sh 'mvn clean package'
             }
