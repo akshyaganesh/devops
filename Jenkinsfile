@@ -5,7 +5,7 @@ pipeline {
         dockerImage = 'maven-docker-agent'
     } 
    
-    agent any
+    agent any 
 
     stages{
 
@@ -20,31 +20,36 @@ pipeline {
                 subject: 'Jenkins Job',
                 to: 'akshyaganesh@gmail.com'
             }
+        }
         stage('Build Maven'){
             steps{
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/akshyaganesh/devops/']])
                 sh 'mvn clean package'
             }
+        }
         stage('MVN CLEAN') {
             steps {
                 echo 'Cleaning project...'
                 sh 'mvn clean'
             }
+        }
         stage('Unit test') {
             steps {
                 echo 'Running Maven unit test with JUnit...'
                 sh 'mvn test'
             }
+        }
         stage('Sonar Test') {
             steps {
                 echo 'Running Sonar Test on Code Quality...'
                 sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.1.15:9000'
-                }
+            }
+        }
             steps {
                 withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
                 sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
-                    }
                 }
+            }
         stage('MVN PACKAGE') {
             steps {
                 echo 'Maven Packaging'
@@ -77,5 +82,5 @@ pipeline {
                 }
             }
         }*/
-    }
+    } 
 }
