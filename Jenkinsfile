@@ -35,8 +35,8 @@ pipeline {
             }
         }
             steps {
-                withCredentials([string(credentialsId 'sonarqube-connection', variable 'SONAR_AUTH_TOKEN')]) {
-                sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+                withCredentials([string(credentialsId 'sonarqube-connection', variable 'sonarqube-connection')]) {
+                sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn sonar:sonar -Dsonar.login=$sonarqube-connection -Dsonar.host.url=http://192.168.1.15:9000'
                 }
             }
         stage('MVN PACKAGE') {
