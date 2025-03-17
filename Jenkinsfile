@@ -28,17 +28,20 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage('Sonar Test') {
+        stage('SonarQube Analysis') {
             steps {
-                echo 'Running Sonar Test on Code Quality...'
-                sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.1.15:9000'
-            }
-        }
-            steps {
-                withCredentials([string(credentialsId 'sonarqube-connection', variable 'sonarqube-connection')]) {
-                sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn sonar:sonar -Dsonar.login=$sonarqube-connection -Dsonar.host.url=http://192.168.1.15:9000'
+                script [
+                    withSonarQubeEnv('SonarQubeServer') { # Replace 'SonarQubeServer' with your Jenkins SonarQube configuration name
+                        sh '''
+                            mvn clean verify sonar:sonar \
+                                -Dsonar.host.url=http://192.168.1.15:9000 \
+                                -Dsonar.login=s$sonar-connection
+                            '''
+                    }        
                 }
             }
+        }
+
         stage('MVN PACKAGE') {
             steps {
                 echo 'Maven Packaging'
