@@ -58,17 +58,7 @@ pipeline {
                 }
             }
         }
-        stage('Push image to Hub'){
-            steps{
-                script{
-                   withCredentials([string(credentialsId 'm5muthu1975', variable 'dockerhubpwd')]) {
-                   sh 'docker login -u akshyaganesh@rediffmail.com -p ${dockerhubpwd}'
 
-                    }
-                   sh 'docker push akshyaganesh/devops'
-                }
-            }
-        }
         /*stage('Deploy to k8s'){
             steps{
                 script{
