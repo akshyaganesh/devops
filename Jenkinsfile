@@ -37,8 +37,10 @@ pipeline {
                                 -Dsonar.host.url=http://192.168.1.15:9000 \
                                 -Dsonar.login=s$sonar-connection
                             '''
-                    }        
-                }
+                    } 
+
+                ]
+            
             }
         }
 
