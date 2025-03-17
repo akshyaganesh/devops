@@ -12,18 +12,18 @@ pipeline {
         stage('Mail Notification') {
             steps {
                 echo 'Sending Mail'
-                mail bcc: '',
-                body: 'Jenkins Build Started',
-                cc: '',
-                from: '',
-                replyTo: '',
-                subject: 'Jenkins Job',
-                to: 'akshyaganesh@gmail.com'
+                mail bcc '',
+                body 'Jenkins Build Started',
+                cc '',
+                from '',
+                replyTo '',
+                subject 'Jenkins Job',
+                to 'akshyaganesh@gmail.com'
             }
         }
         stage('Build Maven'){
             steps{
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/akshyaganesh/devops/']])
+                checkout scmGit(branches [[name '*/main']], extensions [], userRemoteConfigs [[url 'https://github.com/akshyaganesh/devops/']])
                 sh 'mvn clean package'
             }
         }
@@ -46,7 +46,7 @@ pipeline {
             }
         }
             steps {
-                withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
+                withCredentials([string(credentialsId 'sonarqube', variable 'SONAR_AUTH_TOKEN')]) {
                 sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
                 }
             }
@@ -67,7 +67,7 @@ pipeline {
         stage('Push image to Hub'){
             steps{
                 script{
-                   withCredentials([string(credentialsId: 'm5muthu1975', variable: 'dockerhubpwd')]) {
+                   withCredentials([string(credentialsId 'm5muthu1975', variable 'dockerhubpwd')]) {
                    sh 'docker login -u akshyaganesh@rediffmail.com -p ${dockerhubpwd}'
 
                     }
@@ -78,7 +78,7 @@ pipeline {
         /*stage('Deploy to k8s'){
             steps{
                 script{
-                    kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfigpwd')
+                    kubernetesDeploy (configs 'deploymentservice.yaml',kubeconfigId 'k8sconfigpwd')
                 }
             }
         }*/
