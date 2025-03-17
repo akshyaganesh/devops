@@ -30,7 +30,6 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                script [
                     withSonarQubeEnv('sonar-connection') { 
                         sh '''
                             mvn clean verify sonar:sonar \
@@ -38,9 +37,7 @@ pipeline {
                                 -Dsonar.login=$sonar-connection
                             '''
                     } 
-
-                ]
-            
+      
             }
         }
 
