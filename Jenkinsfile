@@ -9,18 +9,6 @@ pipeline {
 
     stages{
 
-        stage('Mail Notification') {
-            steps {
-                echo 'Sending Mail'
-                mail bcc '',
-                body 'Jenkins Build Started',
-                cc '',
-                from '',
-                replyTo '',
-                subject 'Jenkins Job',
-                to 'akshyaganesh@gmail.com'
-            }
-        }
         stage('Build Maven'){
             steps{
                 checkout scmGit(branches [[name '*/main']], extensions [], userRemoteConfigs [[url 'https://github.com/akshyaganesh/devops/']])
