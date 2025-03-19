@@ -38,14 +38,14 @@ pipeline {
             }
         }
 
-        stage('MVN PACKAGE') {
+        stage('App PACKAGE') {
             steps {
                 echo 'Maven Packaging'
                 sh 'mvn package -Dmaven.test.skip=true'
             }
 
         }
-        stage('Build docker image'){
+        stage('Build image'){
             steps{
                 script{
                     sh 'docker build -t akshyaganesh/maven-docker-agent .'
@@ -53,12 +53,12 @@ pipeline {
             }
         }
 
-        /*stage('Deploy to k8s'){
+        stage('Deploy to k8s'){
             steps{
                 script{
-                    kubernetesDeploy (configs 'deploymentservice.yaml',kubeconfigId 'k8sconfigpwd')
+                    kubernetesDeploy(configs 'deploymentservice.yaml',kubeconfigId 'kubernetes-connection')
                 }
             }
-        }*/
+        }
     } 
 }
