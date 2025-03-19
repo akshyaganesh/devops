@@ -57,7 +57,8 @@ pipeline {
             steps{
                 script{
                     //kubernetesDeploy(configs 'deploymentservice.yaml',kubeconfigId 'kubernetes-connection')
-                    sh 'kubectl apply -f deploymentservice.yaml'
+                    sh 'sshpass -p redhat scp /var/lib/jenkins/workspace/devops/deloymentservice.yaml root@192.168.1.15:/root/'
+                    sh 'sshpass -p redhat ssh root@192.168.1.15 kubectl apply -f deploymentservice.yaml'
                 }
             }
         }
