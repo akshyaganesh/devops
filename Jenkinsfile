@@ -52,15 +52,23 @@ pipeline {
                 }
             }
         }
-
-        stage('Deploy to k8s'){
+        stage('Push image'){
             steps{
                 script{
-                    //kubernetesDeploy(configs 'deploymentservice.yaml',kubeconfigId 'kubernetes-connection')
-                    sh """sshpass -p redhat scp /var/lib/jenkins/workspace/devops/deploymentservice.yaml root@192.168.1.15:/root/"""
-                    sh """sshpass -p redhat ssh root@192.168.1.15 kubectl apply -f deploymentservice.yaml"""
+                    withCredentials([string(credentialsId: 'dockerhub', variable: 'DOCKERHUB')]) {
+                        sh "docker login -u akshyaganesh -p $DOCKERHUB"
+                    }
+                    sh 'docker push akshyaganesh/maven-docker-agent'
                 }
             }
         }
+        /*stage('Deploy to k8s'){
+            steps{
+                script{
+                    kubernetesDeploy(configs 'deploymentservice.yaml',kubeconfigId 'kubernetes-connection')
+                }
+            }
+        }*/
+
     } 
 }
