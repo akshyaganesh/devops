@@ -55,7 +55,7 @@ pipeline {
         stage('Push image'){
             steps{
                 script{
-                    withCredentials([string(credentialsId: 'dockerhub', variable: 'DOCKERHUB')]) {
+                    withCredentials([string(credentialsId: 'dockerhub-connection', variable: 'DOCKERHUB')]) {
                         sh "docker login -u akshyaganesh -p $DOCKERHUB"
                     }
                     sh 'docker push akshyaganesh/maven-docker-agent'
