@@ -30,8 +30,8 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             environment {
-                SONAR_HOST_URL = 'http://192.168.1.15:9000' // Replace with your SonarQube URL
-                SONAR_AUTH_TOKEN = credentials('sonarqube-connection') // Store your token in Jenkins credentials
+                SONAR_HOST_URL = 'http://172.27.8.30:9000' // Replace with your SonarQube URL
+                SONAR_AUTH_TOKEN = credentials('sonar_cicd') // Store your token in Jenkins credentials
             }
             steps {
                 sh 'mvn sonar:sonar -Dsonar.projectKey=sample_project -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_AUTH_TOKEN'
